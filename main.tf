@@ -10,7 +10,7 @@ resource "google_cloudbuild_trigger" "filename-trigger" {
   name = "easysv-cloud-build-dev"
 
   trigger_template {
-    branch_name = "main"
+    branch_name = "^(main|master)$"
     repo_name   = "easysv"
     project_id = "easysv-project-dev"
   }
