@@ -19,10 +19,13 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-# create the bucket to store terraform state into
-resource "google_storage_bucket" "terraform_state"  {
-  name    = "easysv-tf-state-dev"
-  location  = var.region
+// Was not able to create the bucket using terraform
+// It should be available before terraform start
+terraform {
+  backend "gcs" {
+    bucket = "easysv-bucket-tfstate"
+    prefix = "terraform/state"
+  }
 }
 
 // Cloud build tools partially working
