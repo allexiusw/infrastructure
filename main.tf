@@ -50,7 +50,7 @@ resource "google_cloudbuild_trigger" "filename-trigger-dev" {
 
   trigger_template {
     branch_name = "^(main|master)$"
-    repo_name   = "easysv"
+    repo_name   = "allexiusw/easysv"
     project_id = var.project_id
   }
 
@@ -68,12 +68,12 @@ resource "google_cloudbuild_trigger" "filename-trigger-dev-tag" {
 
   trigger_template {
     tag_name =  "^(dev-.*)$"
-    repo_name   = "easysv"
+    repo_name   = "allexiusw/easysv"
     project_id = var.project_id
   }
 
   substitutions = {
-    _REPO = "easysv"
+    _REPO = "allexiusw/easysv"
   }
 
   filename = "cloudbuild-dev.gke.yaml"
