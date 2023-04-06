@@ -1,5 +1,8 @@
 name: Create Kubernetes Cluster and Install Argo
-on: push
+on:
+  push:
+    branches:
+      - main
 jobs:
   deploy-terraform:
     runs-on: ubuntu-latest
