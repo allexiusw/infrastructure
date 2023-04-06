@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/bharatmicrosystems/argo-cd-example.git
+    repoURL: https://github.com/allexiusw/infrastructure.git
     targetRevision: HEAD
     path: manifests/nginx
   destination:
