@@ -26,7 +26,7 @@ variable "location" {
 provider "google" {
   project = var.project_id
   region  = var.region
-  zone    = "us-central1-c"
+  zone    = "us-central1"
 }
 
 // Was not able to create the bucket using terraform
@@ -122,11 +122,11 @@ provider "kubectl" {
 }
 
 data "kubectl_file_documents" "namespace" {
-    content = file("../manifests/argocd/namespace.yaml")
+    content = file("manifests/argocd/namespace.yaml")
 } 
 
 data "kubectl_file_documents" "argocd" {
-    content = file("../manifests/argocd/install.yaml")
+    content = file("manifests/argocd/install.yaml")
 }
 
 resource "kubectl_manifest" "namespace" {
@@ -141,5 +141,19 @@ resource "kubectl_manifest" "argocd" {
     ]
     count     = length(data.kubectl_file_documents.argocd.documents)
     yaml_body = element(data.kubectl_file_documents.argocd.documents, count.index)
+    override_namespace = "argocd"
+}
+
+
+data "kubectl_file_documents" "my-nginx-app" {
+    content = file("manifests/argocd/my-nginx.yaml")
+}
+
+resource "kubectl_manifest" "my-nginx-app" {
+    depends_on = [
+      kubectl_manifest.argocd,
+    ]
+    count     = length(data.kubectl_file_documents.my-nginx-app.documents)
+    yaml_body = element(data.kubectl_file_documents.my-nginx-app.documents, count.index)
     override_namespace = "argocd"
 }
