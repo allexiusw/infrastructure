@@ -47,11 +47,14 @@ terraform {
 resource "google_cloudbuild_trigger" "filename-trigger-dev" {
   location = "global"
   name = "easysv-cloud-build-dev"
+  project = var.project_id
 
-  trigger_template {
-    branch_name = "^(main|master)$"
-    repo_name   = "allexiusw/easysv"
-    project_id = var.project_id
+  github {
+    owner = "allexiusw"
+    name = "easysv"
+    push {
+      branch = "^(main|master)$"
+    }
   }
 
   substitutions = {
@@ -65,11 +68,14 @@ resource "google_cloudbuild_trigger" "filename-trigger-dev" {
 resource "google_cloudbuild_trigger" "filename-trigger-dev-tag" {
   location = "global"
   name = "easysv-cloud-build-dev-tag"
+  project = var.project_id
 
-  trigger_template {
-    tag_name =  "^(dev-.*)$"
-    repo_name   = "allexiusw/easysv"
-    project_id = var.project_id
+  github {
+    owner = "allexiusw"
+    name = "easysv"
+    push {
+      tag = "^(dev-.*)$"
+    }
   }
 
   substitutions = {
